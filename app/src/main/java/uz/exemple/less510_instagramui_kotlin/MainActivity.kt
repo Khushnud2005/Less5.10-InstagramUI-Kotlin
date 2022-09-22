@@ -44,12 +44,12 @@ class MainActivity : AppCompatActivity() {
 
         val feeds: ArrayList<Feed> = ArrayList<Feed>()
         feeds.add(Feed(stories))
-        feeds.add(Feed(Post(R.drawable.profile4, "Yamach", getTwoPhotos())))
-        feeds.add(Feed(Post(R.drawable.profile1, "Anvaar", getThreePhotos())))
-        feeds.add(Feed(Post(R.drawable.profile3, "Sarvar", R.drawable.photo3)))
-        feeds.add(Feed(Post(R.drawable.profile2, "Qambar", R.drawable.photo2)))
-        feeds.add(Feed(Post(R.drawable.profile4, "Yamach", R.drawable.photo4)))
-        feeds.add(Feed(Post(R.drawable.profile1, "Anvar", R.drawable.photo1)))
+        feeds.add(Feed(Post(R.drawable.profile4, "Yamach", getTwoPhotos(),false)))
+        feeds.add(Feed(Post(R.drawable.profile1, "Anvaar", getThreePhotos(),false)))
+        feeds.add(Feed(Post(R.drawable.profile3, "Sarvar", R.drawable.photo7,true)))
+        feeds.add(Feed(Post(R.drawable.profile2, "Qambar", R.drawable.photo2,false)))
+        feeds.add(Feed(Post(R.drawable.profile4, "Yamach", R.drawable.photo4,false)))
+        feeds.add(Feed(Post(R.drawable.profile1, "Anvar", R.drawable.photo1,false)))
 
         return feeds;
     }

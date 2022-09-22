@@ -21,6 +21,7 @@ class FeedAdapter(var context: Context, var items: ArrayList<Feed>) :
         private val TYPE_ITEM_STORY = 0
         private val TYPE_ITEM_POST = 1
         private val TYPE_POST_2X = 2
+        private val TYPE_ADD_POST = 3
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -28,6 +29,8 @@ class FeedAdapter(var context: Context, var items: ArrayList<Feed>) :
             return TYPE_ITEM_STORY
         } else if (items[position].post!!.photos != null){
             return TYPE_POST_2X
+        }else if (items[position].post!!.isAdd){
+            return TYPE_ADD_POST
         }
             return TYPE_ITEM_POST
     }
@@ -38,16 +41,16 @@ class FeedAdapter(var context: Context, var items: ArrayList<Feed>) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         if (viewType == TYPE_ITEM_STORY) {
-            val view =
-                LayoutInflater.from(parent.context).inflate(R.layout.item_feed_story, parent, false)
+            val view =LayoutInflater.from(parent.context).inflate(R.layout.item_feed_story, parent, false)
             return StoryViewHolder(context, view)
         }else if (viewType == TYPE_POST_2X){
-            val view =
-                LayoutInflater.from(parent.context).inflate(R.layout.item_post_2x_photo, parent, false)
+            val view =LayoutInflater.from(parent.context).inflate(R.layout.item_post_2x_photo, parent, false)
             return Post2XViewHolder(view)
+        }else if (viewType == TYPE_ADD_POST){
+            val view =LayoutInflater.from(parent.context).inflate(R.layout.item_add_post, parent, false)
+            return AddPostViewHolder(view)
         }
-        val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.item_feed_post, parent, false)
+        val view =LayoutInflater.from(parent.context).inflate(R.layout.item_feed_post, parent, false)
         return PosterViewHolder(view)
     }
 
@@ -65,6 +68,15 @@ class FeedAdapter(var context: Context, var items: ArrayList<Feed>) :
         }
 
         if (holder is PosterViewHolder) {
+            var iv_profile = holder.iv_profile
+            var iv_photo = holder.iv_photo
+            var tv_fullname = holder.tv_fullname
+
+            iv_profile.setImageResource(feed.post!!.profile)
+            iv_photo.setImageResource(feed.post!!.photo)
+            tv_fullname.text = feed.post!!.fullname
+        }
+        if (holder is AddPostViewHolder) {
             var iv_profile = holder.iv_profile
             var iv_photo = holder.iv_photo
             var tv_fullname = holder.tv_fullname
@@ -95,7 +107,18 @@ class FeedAdapter(var context: Context, var items: ArrayList<Feed>) :
             recyclerView.setLayoutManager(manager)
         }
     }
+    class AddPostViewHolder(var view: View) : RecyclerView.ViewHolder(view) {
+        var iv_profile: ImageView
+        var iv_photo: ImageView
+        var tv_fullname: TextView
 
+
+        init {
+            iv_profile = view.findViewById(R.id.iv_profile)
+            tv_fullname = view.findViewById(R.id.tv_fullname)
+            iv_photo = view.findViewById(R.id.iv_photo)
+        }
+    }
     class PosterViewHolder(var view: View) : RecyclerView.ViewHolder(view) {
         var iv_profile: ImageView
         var iv_photo: ImageView
